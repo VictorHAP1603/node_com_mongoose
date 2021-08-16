@@ -17,6 +17,79 @@ findById = {}
 
 
 
-// sort
+=========== SORT ==============
+
 -1 === decrescente - maior pro menor
 1 === ascendente - menor pro maior
+
+
+// limitando resultados
+
+ let users = await User.find({
+    // "name.first": "Victor",
+    age: { $gte: 16 },
+  })
+    .sort({ "name.first": 1, "name.last": 1 })
+    .skip(3)
+    .limit(2);
+
+
+============ CRIAR =================
+
+---- 1° Maneira
+  let newUser = await User.create({
+    name: { first: "Monaliza", last: "Vigario" },
+    email: "monaliza@yahoo.com.br",
+    age: 25,
+    interests: ["artes", "pinturas"],
+  });
+
+---- 2° Maneira
+     let newUser = new User();
+      newUser.name = { first: "Joao", last: "Paulo" };
+      newUser.email = "joaopaulo@hotmail.com";
+      newUser.age = 30;
+      newUser.interests = ["programacao", "basquete"];
+
+      let result = await newUser.save();
+
+
+============= UPDATE ================
+
+- 1° Maneira
+
+--  await User.updateMany({ age: { $lte: 20 } }, { age: 25 });
+    1° paremetro é pra achar os que vao sofre o update, ai no caso é todos que forem abaixo ou igual a 20 anos
+      e vão receber a idade 25
+
+- 2° Maneira
+
+--  await User.updateOne(
+    { email: "valvesperricci@yahoo.com.br" },
+    { "name.first": "Victinho" }
+  );
+
+  Mesmo esquema do primeiro, mas só vai achar um, ou seja, a busca no primeiro parametro tem q ser mais especifica
+
+- 3° Maneira
+
+  let user = await User.findOne({ email: "mjperricci@yahoo.com.br" });
+  user.name.first = "Marinho";
+  user.age = 100;
+  await user.save();
+
+- 4° Maneira
+
+  findOneAndUpdate() == igual ao o updateOne, só muda que ele retorna o objeto que foi cadastrado
+
+
+========= DELETAR ==========
+
+-- await User.findOneAndDelete({ email: "joaopaulo@hotmail.com" });
+
+-- let user = await User.findOne({ email: "monaliza@yahoo.com.br" });
+   await user.remove();
+
+  
+ 
+ 

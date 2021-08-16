@@ -1,32 +1,55 @@
 import { Request, Response } from "express";
-import { Product } from "../models/Product";
 
 import User from "../models/User";
 
 export const home = async (req: Request, res: Response) => {
-  let users = await User.find({
-    // "name.first": "Victor",
-    age: { $gte: 16 },
-  }).sort({ age: -1 });
+  const users = await User.find({});
 
-  console.log(users); 
+  return res.render("pages/home", {
+    users,
+  });
+};
 
-  let showOld: boolean = false;
-  let age: number = 90;
-
-  if (age > 50) {
-    showOld = true;
+export const deletar = async (req: Request, res: Response) => {
+  try {
+    const { id } = req.params;
+    await User.findOneAndDelete({ _id: id });
+  } catch (err) {
+    console.log("ERRO: ", err);
   }
 
-  let list = Product.getAll();
-  let expensiveList = Product.getFromPriceAfter(12);
+  return res.redirect("/");
+};
 
-  res.render("pages/home", {
-    name: "Bonieky",
-    lastName: "Lacerda",
-    showOld,
-    products: list,
-    expensives: expensiveList,
-    frasesDoDia: [],
-  });
+export const aumentarIdade = async (req: Request, res: Response) => {
+  try {
+    const { id } = req.query;
+
+    let user = await User.findOne({ _id: id });
+
+    if (user) {
+      user.age++;
+      await user.save();
+    }
+  } catch (err) {
+    console.log("ERRO: ", err);
+  }
+
+  return res.redirect("/");
+};
+
+export const diminuirIdade = async (req: Request, res: Response) => {
+  try {
+    const { id } = req.query;
+    let user = await User.findOne({ _id: id });
+
+    if (user) {
+      user.age--;
+      await user.save();
+    }
+  } catch (err) {
+    console.log("ERRO: ", err);
+  }
+
+  return res.redirect("/");
 };

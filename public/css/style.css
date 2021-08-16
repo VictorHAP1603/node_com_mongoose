@@ -1,3 +1,9 @@
-body {
-    background-color: #FF0000;
+table {
+  width: 100%;
+}
+
+th,
+td {
+  text-align: left;
+  padding: 10px;
 }

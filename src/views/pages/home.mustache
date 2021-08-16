@@ -1,38 +1,35 @@
 {{>partials/header}}
 
-Opa {{name}} {{lastName}}, tudo bem?
-{{#showOld}}
-    Como vai a vida?
-{{/showOld}}
-{{^showOld}}
-    Beleza?
-{{/showOld}}
+<h1>Lista de Usuários</h1>
 
-<hr/>
-<h2>Produtos</h2>
-<ul>
-    {{#products}}
-        {{>partials/productItem}}
-    {{/products}}
-</ul>
 
-<hr/>
-<h2>Produtos a partir de R$ 12</h2>
-<ul>
-    {{#expensives}}
-        {{>partials/productItem}}
-    {{/expensives}}
-</ul>
+<table style="width: 100%" border="1">
+    <thead>
+        <th>Nome</th>
+        <th>E-mail</th>
+        <th>Idade</th>
+        <th>Ações</th>
+    </thead>
+    <tbody>
+        {{#users}}
+            <tr>
+                <td>{{ name.first }} {{ name.last }}</td>
+                <td>{{ email }}</td>
+                <td>{{ age }}</td>
+                <td>
+                    <a href="/deletar-usuario?id={{ id }}">Deletar</a>
+                    <a href="/aumentar-idade?id={{ id }}">Aumentar Idade</a>
+                    <a href="/diminuir-idade?id={{ id }}">Diminuir Idade</a>
+                </td>
+            </tr>
+        {{/users}}
 
-<hr/>
-
-<ul>
-    {{#frasesDoDia}}
-        <li>{{.}}</li>
-    {{/frasesDoDia}}
-    {{^frasesDoDia}}
-        Não há frases motivacionais hoje.
-    {{/frasesDoDia}}
-</ul>
+        {{^users}}
+        <tr>
+            Nao tem saporra
+        </tr>
+        {{/users}}
+    </tbody>
+</table>
 
 {{>partials/footer}}
