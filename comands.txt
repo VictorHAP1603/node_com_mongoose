@@ -1,0 +1,22 @@
+ MONGO
+ 
+-- Comandos de consulta ao banco de dados
+
+$gt = Greater Than = Maior que
+$gte = Greater or Equal = Maior ou igual
+
+$lt = Lower Than = Abaixo de
+$lte = Lower Than or Equal = Abaixo de ou Igual
+
+
+// Métodos de Consulta
+ 
+find = []
+findOne = {}
+findById = {}
+
+
+
+// sort
+-1 === decrescente - maior pro menor
+1 === ascendente - menor pro maior
